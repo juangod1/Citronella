@@ -27,8 +27,7 @@ int yyerror(char *errormsg);
 "/"        { return DIV; }
 "%"         { return MOD; }
 "="         { return ASSIGN; }
-"
-"        { return END_LINE; }
+"\n"        { return END_LINE; }
 "repeat"    { return WHILE; }
 "until"     { return DO; }
 "("       { return PARENTHESIS_OPENED; }
