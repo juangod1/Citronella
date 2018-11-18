@@ -28,6 +28,8 @@ extern char yytext[];
 %%
 
 start: statement
+     | boolean_expression
+     | numeric_expression
      ;
 
 statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Assigning %s to %s.\n",$4,$2); }
@@ -41,22 +43,22 @@ statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Assigning %s to
 
 
 boolean_expression: VARIABLE {$$ = atoi($1);}
-          | CONSTANT_BOOL;
-          | boolean_expression AND boolean_expression { $$=$1&&$3; }
-          | boolean_expression OR boolean_expression { $$=$1||$3; }
-          | NOT boolean_expression { $$ == 0 ? ($$=1):($$=0);}
-          | numeric_expression LESSER numeric_expression { ($1<$3) ? ($$=1):($$=0);}
-          | numeric_expression GREATER numeric_expression { ($1>$3) ? ($$=1):($$=0);}
-          | numeric_expression LESSER_EQ numeric_expression { ($1<=$3) ? ($$=1):($$=0);}
-          | numeric_expression GREATER_EQ numeric_expression { ($1>=$3) ? ($$=1):($$=0);}
+          | CONSTANT_BOOL ;
+          | boolean_expression AND boolean_expression { $$=$1&&$3; printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | boolean_expression OR boolean_expression { $$=$1||$3; printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | NOT boolean_expression { $$ == 0 ? ($$=1):($$=0);printf("evaluated: (%s %d) = %d\n",$1,$2,$$);}
+          | numeric_expression LESSER numeric_expression { ($1<$3) ? ($$=1):($$=0);printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression GREATER numeric_expression { ($1>$3) ? ($$=1):($$=0);printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression LESSER_EQ numeric_expression { ($1<=$3) ? ($$=1):($$=0);printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression GREATER_EQ numeric_expression { ($1>=$3) ? ($$=1):($$=0);printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
           ;
 
 numeric_expression: VARIABLE {$$ = atoi($1);}
           | CONSTANT_NUM;
-          | numeric_expression ADD numeric_expression {$$=$1+$3;}
-          | numeric_expression SUBSTRACT numeric_expression {$$=$1+$3;}
-          | numeric_expression DIVIDE numeric_expression {$$=$1+$3;}
-          | numeric_expression MULTIPLY numeric_expression {$$=$1*$3;}
+          | numeric_expression ADD numeric_expression {$$=$1+$3;printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression SUBSTRACT numeric_expression {$$=$1+$3;printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression DIVIDE numeric_expression {$$=$1+$3;printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
+          | numeric_expression MULTIPLY numeric_expression {$$=$1*$3;printf("evaluated: (%d %s %d) = %d\n",$1,$2,$3,$$);}
           ;
 
 %%
