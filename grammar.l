@@ -73,5 +73,5 @@ true|false        {if(!strcmp(yytext,"true")){
 
 " or " {yylval.str="or";return OR;}
 
-" not " {yylval.str="not";return NOT;}
+"not " {yylval.str="not";return NOT;}
 %%
