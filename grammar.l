@@ -7,10 +7,13 @@ extern int yyerror(char *errormsg);
 
 %%
 
-[\t ]+      {;}
-"hi"       { return HI;  }
-"text"      { return STRING_TYPE; }
-.         { yyerror("Unknown char");  }
-.\n         {printf("end of line");}
+[\t ]+             ;
+\n                {return 0;}
+"text"            { return STRING_TYPE; }
+\".*\"|\'.*\'            { yylval.str = strdup(yytext);
+                    return CONSTANT_STRING; }
+[a-zA-Z0-9]+              {  yylval.str = strdup(yytext);
+                    return VARIABLE; }
+=                    {return EQUALS;}
 
 %%

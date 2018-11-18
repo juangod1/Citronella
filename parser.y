@@ -1,32 +1,27 @@
 %{
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int yylex(void);
 int yyerror(char *errormsg);
+extern char yytext[];
 
 %}
 
-%token HI STRING_TYPE
+%union {
+  char * str;
+}
+
+%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING
+%type <str> statement
 
 %%
 
-program:
-         hi string_type
-        ;
-
-hi:
-        HI     { printf("Hello World\n");   }
-        ;
-
-string_type:
-        STRING_TYPE { printf("string"); }
-        ;
+statement:
+         STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Valid statement: Assigning %s to %s.",$4,$2); };
 
 %%
-
-extern FILE *yyin;
 
 int main(void)
 {
