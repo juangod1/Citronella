@@ -16,22 +16,22 @@ int yyerror(char *errormsg);
 "and"       { return AND; }
 "not"       { return NOT; }
 "eq"       { return EQUALS; }
-"!="        { return NOT_EQUALS; }
+"not eq"        { return NOT_EQUALS; }
 ">"         { return GREATER; }
-">="        { return GREATER_EQ; }
-"<"         { return LESSER; }
-"<="        { return LESSER_EQ; }
+">="        { return GREATER_EQU; }
+"<"         { return LOWER; }
+"<="        { return LOWER_EQU; }
 "+"        { return SUM; }
 "-"         { return SUB; }
 "*"        { return MUL; }
 "/"        { return DIV; }
 "%"         { return MOD; }
 "="         { return ASSIGN; }
-"\n"        { return END_LINE; }
+\n       { return END_LINE; }
 "repeat"    { return WHILE; }
 "until"     { return DO; }
-"("       { return PARENTHESIS_OPENED; }
-")"        { return PARENTHESIS_CLOSED; }
+"("       { return PARENTHESIS_OPEN; }
+")"        { return PARENTHESIS_CLOSE; }
 .         { yyerror("Unknown char");  }
 
 %%
