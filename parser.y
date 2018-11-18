@@ -15,7 +15,7 @@ extern char yytext[];
   int bool;
 }
 
-%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING
+%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING SHOW
 %token <num> NUM_TYPE CONSTANT_NUM
 %token <bool> BOOL_TYPE CONSTANT_BOOL
 %type <str> statement
@@ -25,6 +25,7 @@ extern char yytext[];
 statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Valid statement: Assigning %s to %s.",$4,$2); }
          | NUM_TYPE VARIABLE EQUALS CONSTANT_NUM { printf("Valid statement: Assigning %d to %s.",$4,$2); }
          | BOOL_TYPE VARIABLE EQUALS CONSTANT_BOOL { printf("Valid statement: Assigning %d to %s.",$4,$2); }
+         | SHOW VARIABLE {printf("printing variable %s", $2);}
          ;
 
 %%

@@ -7,8 +7,24 @@ extern int yyerror(char *errormsg);
 
 %%
 
+ /***************************************************
+ ******          Whitespace and newlines       ******
+ ****************************************************/
+
 [\t ]+             ;
 \n                {return 0;}
+
+ /***************************************************
+ ******          Statements                    ******
+ ****************************************************/
+
+=             {return EQUALS;}
+
+"show"           {return SHOW;}
+
+ /***************************************************
+ ******          Data Types                    ******
+ ****************************************************/
 
 "bool"            { return BOOL_TYPE;}
 
@@ -32,7 +48,5 @@ true|false        {if(!strcmp(yytext,"true")){
 
 [a-zA-Z0-9]+              {  yylval.str = strdup(yytext);
                     return VARIABLE; }
-
-=                    {return EQUALS;}
 
 %%
