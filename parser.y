@@ -11,15 +11,18 @@ extern char yytext[];
 
 %union {
   char * str;
+  int num;
 }
 
 %token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING
+%token <num> NUM_TYPE CONSTANT_NUM
 %type <str> statement
 
 %%
 
-statement:
-         STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Valid statement: Assigning %s to %s.",$4,$2); };
+statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Valid statement: Assigning %s to %s.",$4,$2); }
+         | NUM_TYPE VARIABLE EQUALS CONSTANT_NUM { printf("Valid statement: Assigning %d to %s.",$4,$2); }
+         ;
 
 %%
 
