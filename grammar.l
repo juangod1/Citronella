@@ -8,30 +8,6 @@ int yyerror(char *errormsg);
 %%
 
 "hi"       { return HI;  }
-"text"      { return STRING_TYPE; }
-"num"       { return INTEGER_TYPE; }
-"bool"      { return BOOLEAN_TYPE; }
-"show"      { return PRINT; }
-"or"        { return OR; }
-"and"       { return AND; }
-"not"       { return NOT; }
-"eq"       { return EQUALS; }
-"not eq"        { return NOT_EQUALS; }
-">"         { return GREATER; }
-">="        { return GREATER_EQU; }
-"<"         { return LOWER; }
-"<="        { return LOWER_EQU; }
-"+"        { return SUM; }
-"-"         { return SUB; }
-"*"        { return MUL; }
-"/"        { return DIV; }
-"%"         { return MOD; }
-"="         { return ASSIGN; }
-\n       { return END_LINE; }
-"repeat"    { return WHILE; }
-"until"     { return DO; }
-"("       { return PARENTHESIS_OPEN; }
-")"        { return PARENTHESIS_CLOSE; }
 .         { yyerror("Unknown char");  }
 
 %%
@@ -48,7 +24,7 @@ int yywrap(void)
 }
 
 // Error function from
-// https://stackoverflow.com/questions/5456011/how-to-compile-lex-yacc-files-on-windows/5545924#5545924 
+// https://stackoverflow.com/questions/5456011/how-to-compile-lex-yacc-files-on-windows/5545924#5545924
 int yyerror(char *errormsg)
 {
     fprintf(stderr, "%s\n", errormsg);
