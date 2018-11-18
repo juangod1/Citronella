@@ -7,14 +7,20 @@ int yyerror(const char *s);
 
 %}
 
-%token HI
+%token HI STRING_TYPE
 
 %%
 
 program:
-         hi
+         hi string_type
         ;
 
 hi:
         HI     { printf("Hello World\n");   }
         ;
+
+string_type:
+        STRING_TYPE { printf("string"); }
+        ;
+
+%%

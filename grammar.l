@@ -8,6 +8,7 @@ int yyerror(char *errormsg);
 %%
 
 "hi"       { return HI;  }
+"text"      { return STRING_TYPE; }
 .         { yyerror("Unknown char");  }
 
 %%
