@@ -12,11 +12,15 @@ extern int yyerror(char *errormsg);
  ****************************************************/
 
 [\t ]+             ;
-\n                {return 0;}
 
  /***************************************************
  ******          Statements                    ******
  ****************************************************/
+"exit" {return 0;}
+
+"!"            {return CONDITIONAL_ELSE;}
+
+"?\n"            {return CONDITIONAL;}
 
 =             {return EQUALS;}
 

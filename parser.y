@@ -16,10 +16,10 @@ extern char yytext[];
 }
 
 %token <str> ADD SUBSTRACT DIVIDE MULTIPLY LESSER GREATER LESSER_EQ GREATER_EQ AND OR NOT
-%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING SHOW
+%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE
 %token <num> NUM_TYPE CONSTANT_NUM
 %token <bool> BOOL_TYPE CONSTANT_BOOL
-%type <str> statement
+%type <str> statement chained_statements cond_else
 %type <num> numeric_expression
 %type <bool> boolean_expression
 
@@ -33,6 +33,7 @@ start: statement
      ;
 
 statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Assigning %s to %s.\n",$4,$2); }
+         | boolean_expression CONDITIONAL chained_statements cond_else {printf("else");}
          | NUM_TYPE VARIABLE EQUALS numeric_expression { printf("Assigning %d to %s.\n",$4,$2); }
          | BOOL_TYPE VARIABLE EQUALS boolean_expression { printf("Assigning %d to %s.\n",$4,$2); }
          | SHOW VARIABLE {printf("printing variable %s\n", $2);}
@@ -41,6 +42,12 @@ statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING { printf("Assigning %s to
          | SHOW numeric_expression {printf("printing expression %d\n", $2);}
          ;
 
+chained_statements: statement {;}
+          | statement chained_statements {;}
+          ;
+
+cond_else: CONDITIONAL_ELSE statement {;}
+    ;
 
 boolean_expression: VARIABLE {$$ = atoi($1);}
           | CONSTANT_BOOL ;
