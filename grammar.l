@@ -32,17 +32,12 @@ extern int yyerror(char *errormsg);
 
 "bool"            { return BOOL_TYPE;}
 
-true|false        {if(!strcmp(yytext,"true")){
-                      yylval.bool = 1;
-                    }
-                    else if(!strcmp(yytext,"false")){
-                      yylval.bool = 0;
-                    }
+true|false        { yylval.str = strdup(yytext);
                     return CONSTANT_BOOL;}
 
 "num"             {return NUM_TYPE;}
 
-[0-9]+              {   yylval.num = atoi(yytext);
+[0-9]+              {  yylval.str = strdup(yytext);
                         return CONSTANT_NUM;}
 
 "text"            { return STRING_TYPE; }
