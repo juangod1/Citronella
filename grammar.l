@@ -49,4 +49,29 @@ true|false        {if(!strcmp(yytext,"true")){
 [a-zA-Z0-9]+              {  yylval.str = strdup(yytext);
                     return VARIABLE; }
 
+  /***************************************************
+  ******          Expressions                   ******
+  ****************************************************/
+
+"+" {yylval.str="+";return ADD;}
+
+"-" {yylval.str="-";return SUBSTRACT;}
+
+"/" {yylval.str="/";return DIVIDE;}
+
+"." {yylval.str=".";return MULTIPLY;}
+
+"<" {yylval.str="<";return LESSER;}
+
+">" {yylval.str=">";return GREATER;}
+
+"<=" {yylval.str="<=";return LESSER_EQ;}
+
+">=" {yylval.str=">=";return GREATER_EQ;}
+
+" and " {yylval.str="and";return AND;}
+
+" or " {yylval.str="or";return OR;}
+
+" not " {yylval.str="not";return NOT;}
 %%
