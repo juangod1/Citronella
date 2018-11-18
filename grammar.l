@@ -10,6 +10,16 @@ extern int yyerror(char *errormsg);
 [\t ]+             ;
 \n                {return 0;}
 
+"bool"            { return BOOL_TYPE;}
+
+true|false        {if(!strcmp(yytext,"true")){
+                      yylval.bool = 1;
+                    }
+                    else if(!strcmp(yytext,"false")){
+                      yylval.bool = 0;
+                    }
+                    return CONSTANT_BOOL;}
+
 "num"             {return NUM_TYPE;}
 
 [0-9]+              {   yylval.num = atoi(yytext);
