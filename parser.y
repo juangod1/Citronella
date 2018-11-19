@@ -34,10 +34,10 @@ statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING {printf("String %s = %s;\
          | boolean_expression CONDITIONAL chained_statements cond_else
          | NUM_TYPE VARIABLE EQUALS numeric_expression {printf("int %s = %s;\n",$2,$4);}
          | BOOL_TYPE VARIABLE EQUALS boolean_expression {printf("boolean %s = %s;\n",$2,$4);}
-         | SHOW VARIABLE
-         | SHOW CONSTANT_STRING
-         | SHOW boolean_expression
-         | SHOW numeric_expression
+         | SHOW VARIABLE {printf("System.out.println(%s)",$2);}
+         | SHOW CONSTANT_STRING {printf("System.out.println(%s)",$2);}
+         | SHOW boolean_expression {printf("System.out.println(%s)",$2);}
+         | SHOW numeric_expression {printf("System.out.println(%s)",$2);}
          ;
 
 chained_statements: statement
@@ -49,21 +49,21 @@ cond_else: CONDITIONAL_ELSE statement
 
 boolean_expression: VARIABLE
           | CONSTANT_BOOL
-          | boolean_expression AND boolean_expression
-          | boolean_expression OR boolean_expression
-          | NOT boolean_expression
-          | numeric_expression LESSER numeric_expression
-          | numeric_expression GREATER numeric_expression
-          | numeric_expression LESSER_EQ numeric_expression
-          | numeric_expression GREATER_EQ numeric_expression
+          | boolean_expression AND boolean_expression {printf("(%s&&%s)",$1,$3);}
+          | boolean_expression OR boolean_expression {printf("(%s||%s)",$1,$3);}
+          | NOT boolean_expression {printf("!%s",$2);}
+          | numeric_expression LESSER numeric_expression {printf("(%s<%s)",$1,$3);}
+          | numeric_expression GREATER numeric_expression {printf("(%s>%s)",$1,$3);}
+          | numeric_expression LESSER_EQ numeric_expression {printf("(%s<=%s)",$1,$3);}
+          | numeric_expression GREATER_EQ numeric_expression {printf("(%s>=%s)",$1,$3);}
           ;
 
 numeric_expression: VARIABLE
           | CONSTANT_NUM
-          | numeric_expression ADD numeric_expression
-          | numeric_expression SUBSTRACT numeric_expression
-          | numeric_expression DIVIDE numeric_expression
-          | numeric_expression MULTIPLY numeric_expression
+          | numeric_expression ADD numeric_expression {printf("(%s+%s)",$1,$3);}
+          | numeric_expression SUBSTRACT numeric_expression {printf("(%s-%s)",$1,$3);}
+          | numeric_expression DIVIDE numeric_expression {printf("(%s/%s)",$1,$3);}
+          | numeric_expression MULTIPLY numeric_expression {printf("(%s*%s)",$1,$3);}
           ;
 
 %%
