@@ -16,7 +16,7 @@ extern char yytext[];
 }
 
 %token <str> ADD SUBSTRACT DIVIDE MULTIPLY LESSER GREATER LESSER_EQ GREATER_EQ AND OR NOT
-%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE
+%token <str> STRING_TYPE VARIABLE EQUALS CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION
 %token <str> NUM_TYPE CONSTANT_NUM
 %token <str> BOOL_TYPE CONSTANT_BOOL
 %type <str> statement chained_statements cond_else numeric_expression boolean_expression
@@ -31,13 +31,14 @@ start: statement
      ;
 
 statement: STRING_TYPE VARIABLE EQUALS CONSTANT_STRING {printf("String %s = %s;\n",$2,$4);}
-         | boolean_expression CONDITIONAL chained_statements cond_else
+         | boolean_expression CONDITIONAL chained_statements cond_else {printf("elseif");}
          | NUM_TYPE VARIABLE EQUALS numeric_expression {printf("int %s = %s;\n",$2,$4);}
          | BOOL_TYPE VARIABLE EQUALS boolean_expression {printf("boolean %s = %s;\n",$2,$4);}
          | SHOW VARIABLE {printf("System.out.println(%s)",$2);}
          | SHOW CONSTANT_STRING {printf("System.out.println(%s)",$2);}
          | SHOW boolean_expression {printf("System.out.println(%s)",$2);}
          | SHOW numeric_expression {printf("System.out.println(%s)",$2);}
+         | LOOP chained_statements LOOP_CONDITION boolean_expression {printf("loopy loop");}
          ;
 
 chained_statements: statement

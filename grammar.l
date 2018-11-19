@@ -16,6 +16,10 @@ extern int yyerror(char *errormsg);
  /***************************************************
  ******          Statements                    ******
  ****************************************************/
+"repeat" {return LOOP;}
+
+"until" {return LOOP_CONDITION;}
+
 "exit" {return 0;}
 
 "!"            {return CONDITIONAL_ELSE;}
