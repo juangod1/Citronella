@@ -49,21 +49,21 @@ cond_else: CONDITIONAL_ELSE statement
 
 boolean_expression: VARIABLE
           | CONSTANT_BOOL
-          | boolean_expression AND boolean_expression {printf("(%s&&%s)",$1,$3);}
-          | boolean_expression OR boolean_expression {printf("(%s||%s)",$1,$3);}
+          | boolean_expression AND boolean_expression {printf("%s&&%s",$1,$3);}
+          | boolean_expression OR boolean_expression {printf("%s||%s",$1,$3);}
           | NOT boolean_expression {printf("!%s",$2);}
-          | numeric_expression LESSER numeric_expression {printf("(%s<%s)",$1,$3);}
-          | numeric_expression GREATER numeric_expression {printf("(%s>%s)",$1,$3);}
-          | numeric_expression LESSER_EQ numeric_expression {printf("(%s<=%s)",$1,$3);}
-          | numeric_expression GREATER_EQ numeric_expression {printf("(%s>=%s)",$1,$3);}
+          | numeric_expression LESSER numeric_expression {printf("%s<%s",$1,$3);}
+          | numeric_expression GREATER numeric_expression {printf("%s>%s",$1,$3);}
+          | numeric_expression LESSER_EQ numeric_expression {printf("%s<=%s",$1,$3);}
+          | numeric_expression GREATER_EQ numeric_expression {printf("%s>=%s",$1,$3);}
           ;
 
 numeric_expression: VARIABLE
           | CONSTANT_NUM
-          | numeric_expression ADD numeric_expression {printf("(%s+%s)",$1,$3);}
-          | numeric_expression SUBSTRACT numeric_expression {printf("(%s-%s)",$1,$3);}
-          | numeric_expression DIVIDE numeric_expression {printf("(%s/%s)",$1,$3);}
-          | numeric_expression MULTIPLY numeric_expression {printf("(%s*%s)",$1,$3);}
+          | numeric_expression ADD numeric_expression {printf("%s+%s",$1,$3);}
+          | numeric_expression SUBSTRACT numeric_expression {printf("%s-%s",$1,$3);}
+          | numeric_expression DIVIDE numeric_expression {printf("%s/%s",$1,$3);}
+          | numeric_expression MULTIPLY numeric_expression {printf("%s*%s",$1,$3);}
           ;
 
 %%
