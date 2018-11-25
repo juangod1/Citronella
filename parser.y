@@ -40,7 +40,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE {printf("String 
          | SHOW CONSTANT_STRING NEW_LINE {printf("System.out.println(%s)",$2);}
          | SHOW boolean_expression NEW_LINE {printf("System.out.println(%s)",$2);}
          | SHOW numeric_expression NEW_LINE {printf("System.out.println(%s)",$2);}
-         | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE {printf("loopy loop");}
+         | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE {printf("do{%s}while(%s);",$2,$4);}
          ;
 
 chained_statements: statement
@@ -67,9 +67,9 @@ boolean: VARIABLE
 
 numeric_expression: numeric {;}
           | numeric_expression ADD numeric {strcat($$,"+");strcat($$,$3);}
-          | numeric_expression SUBSTRACT numeric {printf("-%s",$3);}
-          | numeric_expression DIVIDE numeric {printf("/%s",$3);}
-          | numeric_expression MULTIPLY numeric {printf("*%s",$3);}
+          | numeric_expression SUBSTRACT numeric {strcat($$,"-");strcat($$,$3);}
+          | numeric_expression DIVIDE numeric {strcat($$,"/");strcat($$,$3);}
+          | numeric_expression MULTIPLY numeric {strcat($$,"*");strcat($$,$3);}
           ;
 
 numeric: VARIABLE
