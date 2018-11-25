@@ -26,9 +26,10 @@ extern char yytext[];
 
 %%
 
-start: statement
+start: chained_statements 
      | boolean_expression
      | numeric_expression
+
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE {printf("String %s = %s;\n",$2,$4);}
