@@ -72,6 +72,7 @@ boolean_expression: VARIABLE
 
 numeric_expression: VARIABLE
           | CONSTANT_NUM
+          | PARENTHESIS_OPENED numeric_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | numeric_expression ADD numeric_expression {strcat($$,"+");strcat($$,$3);}
           | numeric_expression SUBSTRACT numeric_expression {strcat($$,"-");strcat($$,$3);}
           | numeric_expression DIVIDE numeric_expression {strcat($$,"/");strcat($$,$3);}
