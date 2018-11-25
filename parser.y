@@ -39,6 +39,12 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"Integer ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
          | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE
          {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"boolean ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         | VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
+         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}     /*HAY QUE VERIFICAR QUE SE PUEDA HACER LA ASIGNACION*/
+         | VARIABLE ASSIGN numeric_expression NEW_LINE
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         | VARIABLE ASSIGN boolean_expression NEW_LINE
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
          | SHOW VARIABLE NEW_LINE
          {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
          | SHOW CONSTANT_STRING NEW_LINE
