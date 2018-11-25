@@ -26,7 +26,7 @@ extern char yytext[];
 
 %%
 
-start: chained_statements 
+start: chained_statements
      | boolean_expression
      | numeric_expression
 
@@ -65,8 +65,8 @@ boolean_expression: boolean {printf("%s",$1);}
 boolean: VARIABLE
           | CONSTANT_BOOL
 
-numeric_expression: numeric {printf("%s",$1);}
-          | numeric_expression ADD numeric {printf("+%s",$3);}
+numeric_expression: numeric {;}
+          | numeric_expression ADD numeric {strcat($$,"+");strcat($$,$3);}
           | numeric_expression SUBSTRACT numeric {printf("-%s",$3);}
           | numeric_expression DIVIDE numeric {printf("/%s",$3);}
           | numeric_expression MULTIPLY numeric {printf("*%s",$3);}
