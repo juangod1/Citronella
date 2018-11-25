@@ -13,6 +13,8 @@ extern int yyerror(char *errormsg);
 
 [\t ]+             ;
 
+[\n]+       {return NEW_LINE;}
+
  /***************************************************
  ******          Statements                    ******
  ****************************************************/
@@ -26,7 +28,7 @@ extern int yyerror(char *errormsg);
 
 "?\n"            {return CONDITIONAL;}
 
-=             {return EQUALS;}
+=             {return ASSIGN;}
 
 "show"           {return SHOW;}
 
@@ -47,10 +49,10 @@ true|false        { yylval.str = strdup(yytext);
 "text"            { return STRING_TYPE; }
 
 \".*\"|\'.*\'            { yylval.str = strdup(yytext);
-                    return CONSTANT_STRING; }
+                          return CONSTANT_STRING; }
 
 [a-zA-Z0-9]+              {  yylval.str = strdup(yytext);
-                    return VARIABLE; }
+                            return VARIABLE; }
 
   /***************************************************
   ******          Expressions                   ******
@@ -71,6 +73,8 @@ true|false        { yylval.str = strdup(yytext);
 "<=" {yylval.str="<=";return LESSER_EQ;}
 
 ">=" {yylval.str=">=";return GREATER_EQ;}
+
+"==" {yylval.str="==";return EQUALS;}
 
 " and " {yylval.str="and";return AND;}
 
