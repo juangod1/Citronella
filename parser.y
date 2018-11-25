@@ -33,7 +33,7 @@ start: chained_statements {printf("%s",$1);}
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"String ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
-         | boolean_expression CONDITIONAL chained_statements CONDITIONAL_ELSE chained_statements NEW_LINE
+         | boolean_expression CONDITIONAL chained_statements CONDITIONAL_ELSE chained_statements
          {$$=calloc(1,13+strlen($3)+strlen($5));strcat($$,"if(");strcat($$,$1);strcat($$,"){");strcat($$,$3);strcat($$,"}else{");strcat($$,$5);strcat($$,"}");}
          | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE
          {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"Integer ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
