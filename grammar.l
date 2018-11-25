@@ -26,7 +26,7 @@ extern int yyerror(char *errormsg);
 
 "!"            {return CONDITIONAL_ELSE;}
 
-"?\n"            {return CONDITIONAL;}
+"?"            {return CONDITIONAL;}
 
 =             {return ASSIGN;}
 
@@ -34,7 +34,7 @@ extern int yyerror(char *errormsg);
 
 "("        { return PARENTHESIS_OPENED; }
 
-")"        { return PARENTHESIS_CLOSED; } 
+")"        { return PARENTHESIS_CLOSED; }
 
  /***************************************************
  ******          Data Types                    ******

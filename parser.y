@@ -20,39 +20,44 @@ extern char yytext[];
 %token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED
 %token <str> NUM_TYPE CONSTANT_NUM
 %token <str> BOOL_TYPE CONSTANT_BOOL
-%type <str> statement chained_statements cond_else numeric_expression boolean_expression
+%type <str> statement chained_statements numeric_expression boolean_expression
 
 %start start
 
 %%
 
-start: chained_statements
-     | boolean_expression
-     | numeric_expression
-
+start: chained_statements {printf("%s",$1);}
+     | boolean_expression {printf("%s",$1);}
+     | numeric_expression {printf("%s",$1);}
      ;
 
-statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE {printf("String %s = %s;\n",$2,$4);}
-         | boolean_expression CONDITIONAL chained_statements cond_else NEW_LINE {printf("elseif");}
-         | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE {printf("int %s = %s;\n",$2,$4);}
-         | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE {printf("boolean %s = %s;\n",$2,$4);}
-         | SHOW VARIABLE NEW_LINE {printf("System.out.println(%s)",$2);}
-         | SHOW CONSTANT_STRING NEW_LINE {printf("System.out.println(%s)",$2);}
-         | SHOW boolean_expression NEW_LINE {printf("System.out.println(%s)",$2);}
-         | SHOW numeric_expression NEW_LINE {printf("System.out.println(%s)",$2);}
-         | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE {printf("do{%s}while(%s);",$2,$4);}
+statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
+         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"String ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         | boolean_expression CONDITIONAL chained_statements CONDITIONAL_ELSE chained_statements NEW_LINE
+         {$$=calloc(1,13+strlen($3)+strlen($5));strcat($$,"if(");strcat($$,$1);strcat($$,"){");strcat($$,$3);strcat($$,"}else{");strcat($$,$5);strcat($$,"}");}
+         | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"Integer ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"boolean ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         | SHOW VARIABLE NEW_LINE
+         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         | SHOW CONSTANT_STRING NEW_LINE
+         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         | SHOW boolean_expression NEW_LINE
+         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         | SHOW numeric_expression NEW_LINE
+         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"do{");strcat($$,$2);strcat($$,"}while(");strcat($$,$4);strcat($$,");\n");}
          ;
 
 chained_statements: statement
-          | chained_statements statement
+          | statement chained_statements {strcat($$,$2);}
           ;
-
-cond_else: CONDITIONAL_ELSE statement
-    ;
 
 boolean_expression: VARIABLE
           | CONSTANT_BOOL
-          | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {strcat($$,"(");strcat($$,$2);strcat($$,")");}
+          | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | boolean_expression AND boolean_expression {strcat($$,"&&");strcat($$,$3);}
           | boolean_expression OR boolean_expression {strcat($$,"||");strcat($$,$3);}
           | NOT boolean_expression {strcat($$,"!");strcat($$,$2);}
