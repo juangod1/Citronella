@@ -44,22 +44,22 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE {printf("String 
          ;
 
 chained_statements: statement
-          | statement chained_statements
+          | chained_statements statement
           ;
 
 cond_else: CONDITIONAL_ELSE statement
     ;
 
-boolean_expression: boolean {printf("%s",$1);}
-          | boolean_expression AND boolean {printf("&&%s",$3);}
-          | boolean_expression OR boolean {printf("||%s",$3);}
-          | NOT boolean_expression {printf("!%s",$2);}
-          | numeric_expression LESSER numeric {printf("<%s",$3);}
-          | numeric_expression GREATER numeric {printf(">%s",$3);}
-          | numeric_expression LESSER_EQ numeric {printf("<=%s",$3);}
-          | numeric_expression GREATER_EQ numeric {printf(">=%s",$3);}
-          | boolean_expression EQUALS boolean {printf("==%s",$3);}
-          | numeric_expression EQUALS numeric {printf("==%s",$3);}
+boolean_expression: boolean {;}
+          | boolean_expression AND boolean {strcat($$,"&&");strcat($$,$3);}
+          | boolean_expression OR boolean {strcat($$,"||");strcat($$,$3);}
+          | NOT boolean_expression {strcat($$,"!");strcat($$,$2);}
+          | numeric_expression LESSER numeric {strcat($$,"<");strcat($$,$3);}
+          | numeric_expression GREATER numeric {strcat($$,">");strcat($$,$3);}
+          | numeric_expression LESSER_EQ numeric {strcat($$,"<=");strcat($$,$3);}
+          | numeric_expression GREATER_EQ numeric {strcat($$,">=");strcat($$,$3);}
+          | boolean_expression EQUALS boolean {strcat($$,"==");strcat($$,$3);}
+          | numeric_expression EQUALS numeric {strcat($$,"==");strcat($$,$3);}
           ;
 
 boolean: VARIABLE
