@@ -17,10 +17,10 @@ extern char yytext[];
 
 %token <str> NEW_LINE
 %token <str> ADD SUBSTRACT DIVIDE MULTIPLY LESSER GREATER LESSER_EQ GREATER_EQ EQUALS AND OR NOT
-%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION
+%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED
 %token <str> NUM_TYPE CONSTANT_NUM
 %token <str> BOOL_TYPE CONSTANT_BOOL
-%type <str> statement chained_statements cond_else numeric_expression numeric boolean_expression boolean
+%type <str> statement chained_statements cond_else numeric_expression boolean_expression
 
 %start start
 
@@ -50,30 +50,28 @@ chained_statements: statement
 cond_else: CONDITIONAL_ELSE statement
     ;
 
-boolean_expression: boolean {;}
-          | boolean_expression AND boolean {strcat($$,"&&");strcat($$,$3);}
-          | boolean_expression OR boolean {strcat($$,"||");strcat($$,$3);}
-          | NOT boolean_expression {strcat($$,"!");strcat($$,$2);}
-          | numeric_expression LESSER numeric {strcat($$,"<");strcat($$,$3);}
-          | numeric_expression GREATER numeric {strcat($$,">");strcat($$,$3);}
-          | numeric_expression LESSER_EQ numeric {strcat($$,"<=");strcat($$,$3);}
-          | numeric_expression GREATER_EQ numeric {strcat($$,">=");strcat($$,$3);}
-          | boolean_expression EQUALS boolean {strcat($$,"==");strcat($$,$3);}
-          | numeric_expression EQUALS numeric {strcat($$,"==");strcat($$,$3);}
-          ;
-
-boolean: VARIABLE
+boolean_expression: VARIABLE
           | CONSTANT_BOOL
-
-numeric_expression: numeric {;}
-          | numeric_expression ADD numeric {strcat($$,"+");strcat($$,$3);}
-          | numeric_expression SUBSTRACT numeric {strcat($$,"-");strcat($$,$3);}
-          | numeric_expression DIVIDE numeric {strcat($$,"/");strcat($$,$3);}
-          | numeric_expression MULTIPLY numeric {strcat($$,"*");strcat($$,$3);}
+          | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {strcat($$,"(");strcat($$,$2);strcat($$,")");}
+          | boolean_expression AND boolean_expression {strcat($$,"&&");strcat($$,$3);}
+          | boolean_expression OR boolean_expression {strcat($$,"||");strcat($$,$3);}
+          | NOT boolean_expression {strcat($$,"!");strcat($$,$2);}
+          | numeric_expression LESSER numeric_expression {strcat($$,"<");strcat($$,$3);}
+          | numeric_expression GREATER numeric_expression {strcat($$,">");strcat($$,$3);}
+          | numeric_expression LESSER_EQ numeric_expression {strcat($$,"<=");strcat($$,$3);}
+          | numeric_expression GREATER_EQ numeric_expression {strcat($$,">=");strcat($$,$3);}
+          | boolean_expression EQUALS boolean_expression {strcat($$,"==");strcat($$,$3);}
+          | numeric_expression EQUALS numeric_expression {strcat($$,"==");strcat($$,$3);}
           ;
 
-numeric: VARIABLE
+
+numeric_expression: VARIABLE
           | CONSTANT_NUM
+          | numeric_expression ADD numeric_expression {strcat($$,"+");strcat($$,$3);}
+          | numeric_expression SUBSTRACT numeric_expression {strcat($$,"-");strcat($$,$3);}
+          | numeric_expression DIVIDE numeric_expression {strcat($$,"/");strcat($$,$3);}
+          | numeric_expression MULTIPLY numeric_expression {strcat($$,"*");strcat($$,$3);}
+          ;
 
 %%
 

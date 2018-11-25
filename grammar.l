@@ -32,6 +32,10 @@ extern int yyerror(char *errormsg);
 
 "show"           {return SHOW;}
 
+"("        { return PARENTHESIS_OPENED; }
+
+")"        { return PARENTHESIS_CLOSED; } 
+
  /***************************************************
  ******          Data Types                    ******
  ****************************************************/
