@@ -65,7 +65,7 @@ chained_statements: statement
           ;
 
 boolean_expression: VARIABLE { $$ = $1; } /*TODO: Chequear hashmap si es bool y si existe*/
-          | CONSTANT_BOOL
+          | CONSTANT_BOOL {$$=strdup((strcmp($1,"true"))?"0":"1");}
           | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | boolean_expression AND boolean_expression {strcat($$,"&&");strcat($$,$3);}
           | boolean_expression OR boolean_expression {strcat($$,"||");strcat($$,$3);}
