@@ -76,11 +76,12 @@ boolean_expression: VARIABLE { $$ = $1; } /*TODO: Chequear hashmap si es bool y 
           | numeric_expression GREATER_EQ numeric_expression {strcat($$,">=");strcat($$,$3);}
           | boolean_expression EQUALS boolean_expression {strcat($$,"==");strcat($$,$3);}
           | numeric_expression EQUALS numeric_expression {strcat($$,"==");strcat($$,$3);}
+          | VARIABLE EQUALS numeric_expression {strcat($$,"==");strcat($$,$3);}
           ;
 
 
 numeric_expression: VARIABLE  { $$ = $1; } /*TODO: Chequear hashmap si es num y si existe*/
-          | CONSTANT_NUM
+          | CONSTANT_NUM {$$=calloc(1,strlen($1));strcat($$,$1);}
           | PARENTHESIS_OPENED numeric_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | numeric_expression ADD numeric_expression {strcat($$,"+");strcat($$,$3);}
           | numeric_expression SUBSTRACT numeric_expression {strcat($$,"-");strcat($$,$3);}
