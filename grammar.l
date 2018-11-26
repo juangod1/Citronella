@@ -52,7 +52,7 @@ true|false        { yylval.str = strdup(yytext);
 
 "text"            { return STRING_TYPE; }
 
-\".*\"|\'.*\'            { yylval.str = strdup(yytext);
+\".*\"            { yylval.str = strdup(yytext);
                           return CONSTANT_STRING; }
 
 [a-zA-Z0-9]+              {  yylval.str = strdup(yytext);

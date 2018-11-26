@@ -32,27 +32,27 @@ start: chained_statements {printf("%s",$1);}
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
-         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"String ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"char * ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
          | boolean_expression CONDITIONAL chained_statements CONDITIONAL_ELSE chained_statements
          {$$=calloc(1,27+strlen($1)+strlen($3)+strlen($5));strcat($$,"if (");strcat($$,$1);strcat($$,") {\n\t");strcat($$,$3);strcat($$,"} else {\n\t");strcat($$,$5);strcat($$,"}\n");}
          | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE
-         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"Integer ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
          | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE
-         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"boolean ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");}
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,(strcmp($4,"true"))?"0":"1");strcat($$,";\n");}
          | VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
-         {$$=calloc(1,13+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");}     /*HAY QUE VERIFICAR QUE SE PUEDA HACER LA ASIGNACION*/
+         {$$=calloc(1,13+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");}     /*TODO: HAY QUE VERIFICAR QUE SE PUEDA HACER LA ASIGNACION*/
          | VARIABLE ASSIGN numeric_expression NEW_LINE
          {$$=calloc(1,14+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");}
          | VARIABLE ASSIGN boolean_expression NEW_LINE
          {$$=calloc(1,14+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");}
          | SHOW VARIABLE NEW_LINE
-         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");} /*TODO: DEPENDE DEL HASHMAP IMPRIME DISTINTO*/
          | SHOW CONSTANT_STRING NEW_LINE
-         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%s\\n\",");strcat($$,$2);strcat($$,");\n");}
          | SHOW boolean_expression NEW_LINE
-         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");}
          | SHOW numeric_expression NEW_LINE
-         {$$=calloc(1,23+strlen($2));strcat($$,"System.out.println(");strcat($$,$2);strcat($$,");\n");}
+         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");}
          | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE
          {$$=calloc(1,20+strlen($2)+strlen($4));strcat($$,"do {\n\t");strcat($$,$2);strcat($$,"} while (");strcat($$,$4);strcat($$,");\n");}
          ;
@@ -89,7 +89,10 @@ numeric_expression: VARIABLE
 
 int main(void)
 {
+   printf("#include <stdio.h>\n");
+   printf("int main(){\n");
    yyparse();
+   printf("}\n");
    return 0;
 }
 
