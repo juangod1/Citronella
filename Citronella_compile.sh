@@ -1,3 +1,13 @@
+if [ -z "$1" ]; then
+  echo 'ARGUMENTS ERROR: Program should be run as \n./Citronella_compile.sh file.Cit executable_name'
+  exit
+fi
+
+if [ -z "$2" ]; then
+  echo 'ARGUMENTS ERROR: Program should be run as \n./Citronella_compile.sh file.Cit executable_name'
+  exit
+fi
+
 if [ -f "$2.c" ]; then
     rm "$2.c";
 fi
