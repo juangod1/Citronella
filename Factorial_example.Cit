@@ -5,7 +5,7 @@ num y = 6
 
 repeat y = y . x
   x = x - 1
-until x > 0
+while x > 0
 
 show "El factorial de 6 es: "
 show y
