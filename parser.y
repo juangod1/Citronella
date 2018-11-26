@@ -7,6 +7,8 @@ int yylex(void);
 int yyerror(char *errormsg);
 extern char yytext[];
 
+static int read=0;
+
 %}
 
 %union {
@@ -32,13 +34,13 @@ start: chained_statements {printf("%s",$1);free($1);}
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
-         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"char * ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con text*/
+         {$$=calloc(1,13+strlen($2)+strlen($4));strcat($$,"char * ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con text*/ /*TODO: la palabra read es reservada*/
          | boolean_expression CONDITIONAL chained_statements CONDITIONAL_ELSE chained_statements
          {$$=calloc(1,27+strlen($1)+strlen($3)+strlen($5));strcat($$,"if (");strcat($$,$1);strcat($$,") {\n\t");strcat($$,$3);strcat($$,"} else {\n\t");strcat($$,$5);strcat($$,"}\n");}
          | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE
-         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con num*/
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con num*/ /*TODO: la palabra read es reservada*/
          | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE
-         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,(strcmp($4,"true"))?"0":"1");strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con bool*/
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,(strcmp($4,"true"))?"0":"1");strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con bool*/ /*TODO: la palabra read es reservada*/
          | VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,13+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");} /*TODO: Chequear hashmap si es text y si existe*/
          | VARIABLE ASSIGN numeric_expression NEW_LINE
@@ -55,7 +57,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");}
          | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE
          {$$=calloc(1,20+strlen($2)+strlen($4));strcat($$,"do {\n\t");strcat($$,$2);strcat($$,"} while (");strcat($$,$4);strcat($$,");\n");}
-         | READ NEW_LINE { $$=calloc(1,50);strcat($$,"char read[100]; scanf(\"%s\",read);printf(\"%s\\n\",read);\n");} /* TODO: chequear que la variable exista y sea de tipo string */
+         | READ NEW_LINE { $$=calloc(1,50);if(!read){strcat($$,"char read[1000];"); read=1;};strcat($$,"scanf(\"%s\",read);printf(\"%s\\n\",read);\n");} /* TODO: chequear que la variable exista y sea de tipo string */
          ;
 
 chained_statements: statement
