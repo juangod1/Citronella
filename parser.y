@@ -69,7 +69,7 @@ boolean_expression: VARIABLE { $$ = $1; } /*TODO: Chequear hashmap si es bool y 
           | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | boolean_expression AND boolean_expression {strcat($$,"&&");strcat($$,$3);}
           | boolean_expression OR boolean_expression {strcat($$,"||");strcat($$,$3);}
-          | NOT boolean_expression {strcat($$,"!");strcat($$,$2);}
+          | NOT boolean_expression {$$=calloc(1,2+strlen($2));strcat($$,"!");strcat($$,$2);}
           | numeric_expression LESSER numeric_expression {strcat($$,"<");strcat($$,$3);}
           | numeric_expression GREATER numeric_expression {strcat($$,">");strcat($$,$3);}
           | numeric_expression LESSER_EQ numeric_expression {strcat($$,"<=");strcat($$,$3);}
