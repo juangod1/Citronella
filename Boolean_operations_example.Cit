@@ -1,0 +1,10 @@
+bool a = true
+bool b = false
+
+show "The operation: ((true) and false) or b and not (a and b) and not (((true) or false) and b )"
+
+((true) and false) or b and not (a and b) and not (((true) or false) and b )
+? show "is true"
+! show "is false"
+
+exit
