@@ -22,7 +22,7 @@ extern int yyerror(char *errormsg);
 
 "while" {return LOOP_CONDITION;}
 
-"exit" {return 0;}
+"end" {return 0;}
 
 "!"            {return CONDITIONAL_ELSE;}
 

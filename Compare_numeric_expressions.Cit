@@ -8,4 +8,4 @@ a == b
 ? show ok
 ! show error
 
-exit
+end

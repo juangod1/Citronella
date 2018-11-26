@@ -3,4 +3,4 @@ show "¡Espejito rebotín!"
 repeat read
 while true
 
-exit
+end
