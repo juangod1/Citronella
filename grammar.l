@@ -18,11 +18,13 @@ extern int yyerror(char *errormsg);
  /***************************************************
  ******          Statements                    ******
  ****************************************************/
+"begin" {return ENTRY;}
+
 "repeat" {return LOOP;}
 
 "while" {return LOOP_CONDITION;}
 
-"end" {return 0;}
+"end" {return END;}
 
 "!"            {return CONDITIONAL_ELSE;}
 

@@ -19,18 +19,20 @@ static int read=0;
 
 %token <str> NEW_LINE
 %token <str> ADD SUBSTRACT DIVIDE MULTIPLY LESSER GREATER LESSER_EQ GREATER_EQ EQUALS AND OR NOT
-%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED READ
+%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED READ ENTRY END
 %token <str> NUM_TYPE CONSTANT_NUM
 %token <str> BOOL_TYPE CONSTANT_BOOL
-%type <str> statement chained_statements numeric_expression boolean_expression
+%type <str> statement chained_statements numeric_expression boolean_expression code
 
 %start start
 
 %%
 
-start: chained_statements {printf("%s",$1);}
-     | boolean_expression NEW_LINE {printf("%s;\n",$1);}
-     | numeric_expression NEW_LINE {printf("%s;\n",$1);}
+start: ENTRY NEW_LINE code END {printf("#include <stdio.h>\n"); printf("int main(){\n"); printf("%s",$3); printf("}\n"); return 0;}
+
+code: chained_statements
+     | boolean_expression NEW_LINE {$$=calloc(1,3+strlen($1));strcat($$,$1);strcat($$,";\n");}
+     | numeric_expression NEW_LINE {$$=calloc(1,3+strlen($1));strcat($$,$1);strcat($$,";\n");}
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
@@ -93,10 +95,7 @@ numeric_expression: VARIABLE  { $$ = $1; } /*TODO: Chequear hashmap si es num y 
 
 int main(void)
 {
-   printf("#include <stdio.h>\n");
-   printf("int main(){\n");
    yyparse();
-   printf("}\n");
    return 0;
 }
 
