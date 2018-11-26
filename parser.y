@@ -29,8 +29,8 @@ static int read=0;
 %%
 
 start: chained_statements {printf("%s",$1);}
-     | boolean_expression NEW_LINE {printf("%s;\n",$1);free($1);}
-     | numeric_expression NEW_LINE {printf("%s;\n",$1);free($1);}
+     | boolean_expression NEW_LINE {printf("%s;\n",$1);}
+     | numeric_expression NEW_LINE {printf("%s;\n",$1);}
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
