@@ -40,7 +40,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          | NUM_TYPE VARIABLE ASSIGN numeric_expression NEW_LINE
          {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con num*/ /*TODO: la palabra read es reservada*/
          | BOOL_TYPE VARIABLE ASSIGN boolean_expression NEW_LINE
-         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,(strcmp($4,"true"))?"0":"1");strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con bool*/ /*TODO: la palabra read es reservada*/
+         {$$=calloc(1,14+strlen($2)+strlen($4));strcat($$,"int ");strcat($$,$2);strcat($$," = ");strcat($$,$4);strcat($$,";\n");} /*TODO: Chequear hashmap que NO exista y crear la entry con bool*/ /*TODO: la palabra read es reservada*/
          | VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,13+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");} /*TODO: Chequear hashmap si es text y si existe*/
          | VARIABLE ASSIGN numeric_expression NEW_LINE
@@ -65,7 +65,7 @@ chained_statements: statement
           ;
 
 boolean_expression: VARIABLE { $$ = $1; } /*TODO: Chequear hashmap si es bool y si existe*/
-          | CONSTANT_BOOL {$$=strdup((strcmp($1,"true"))?"0":"1");}
+          | CONSTANT_BOOL {$$=calloc(1,2);strcat($$,(strcmp($1,"true"))?"0":"1");}
           | PARENTHESIS_OPENED boolean_expression PARENTHESIS_CLOSED {$$=calloc(1,3+strlen($2));strcat($$,"(");strcat($$,$2);strcat($$,")");}
           | boolean_expression AND boolean_expression {strcat($$,"&&");strcat($$,$3);}
           | boolean_expression OR boolean_expression {strcat($$,"||");strcat($$,$3);}
