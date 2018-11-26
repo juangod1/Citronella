@@ -1,23 +1,20 @@
 num a = 1
-num b = 1000
-num c = 1000
-num d = 1000
-num e = 1000
-
-show "1"
+num b = 100
+num c = 100
+num d = 100
+num e = 100
 
 repeat repeat repeat repeat a = a + 1
-        show "+1"
-        d = d - 1
-      until e == 0
+        show "loopy"
+        e = e - 1
+      while e > 0
       d = d - 1
-    until d == 0
+    while d > 0
     c = c - 1
-  until c == 0
+  while c > 0
   b = b - 1
-until b == 0
+while b > 0
 
-show " is: "
-show a
+show "loopy finished"
 
 exit
