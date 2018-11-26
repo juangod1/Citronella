@@ -1,4 +1,4 @@
-being
+begin
 
 text ok = "Las expresiones son iguales"
 text error = "Las expresiones son distintas"
