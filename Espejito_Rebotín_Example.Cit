@@ -1,6 +1,6 @@
 show "¡Espejito rebotín!"
 
-read
-read
+repeat read
+while true
 
 exit

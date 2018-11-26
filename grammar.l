@@ -20,7 +20,7 @@ extern int yyerror(char *errormsg);
  ****************************************************/
 "repeat" {return LOOP;}
 
-"until" {return LOOP_CONDITION;}
+"while" {return LOOP_CONDITION;}
 
 "exit" {return 0;}
 
