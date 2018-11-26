@@ -48,7 +48,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          | VARIABLE ASSIGN boolean_expression NEW_LINE
          {$$=calloc(1,14+strlen($1)+strlen($3));strcat($$,$1);strcat($$," = ");strcat($$,$3);strcat($$,";\n");} /*TODO: Chequear hashmap si es bool y si existe*/
          | SHOW VARIABLE NEW_LINE
-         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");} /*TODO: DEPENDE DEL HASHMAP IMPRIME DISTINTO (%d o %s)*/
+         {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%s\\n\",");strcat($$,$2);strcat($$,");\n");} /*TODO: DEPENDE DEL HASHMAP IMPRIME DISTINTO (%d o %s)*/
          | SHOW CONSTANT_STRING NEW_LINE
          {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%s\\n\",");strcat($$,$2);strcat($$,");\n");}
          | SHOW boolean_expression NEW_LINE
