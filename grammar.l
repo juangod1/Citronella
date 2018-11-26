@@ -36,6 +36,8 @@ extern int yyerror(char *errormsg);
 
 ")"        { return PARENTHESIS_CLOSED; }
 
+"read"        { return READ; }
+
  /***************************************************
  ******          Data Types                    ******
  ****************************************************/

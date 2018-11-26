@@ -2,7 +2,7 @@ num x = 5
 num y = 6
 
 repeat y = y . x
-x = x - 1
+  x = x - 1
 until x > 0
 
 show "El factorial de 6 es: "

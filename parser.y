@@ -17,7 +17,7 @@ extern char yytext[];
 
 %token <str> NEW_LINE
 %token <str> ADD SUBSTRACT DIVIDE MULTIPLY LESSER GREATER LESSER_EQ GREATER_EQ EQUALS AND OR NOT
-%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED
+%token <str> STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING SHOW CONDITIONAL CONDITIONAL_ELSE LOOP LOOP_CONDITION PARENTHESIS_OPENED PARENTHESIS_CLOSED READ
 %token <str> NUM_TYPE CONSTANT_NUM
 %token <str> BOOL_TYPE CONSTANT_BOOL
 %type <str> statement chained_statements numeric_expression boolean_expression
@@ -26,9 +26,9 @@ extern char yytext[];
 
 %%
 
-start: chained_statements {printf("%s",$1);}
-     | boolean_expression NEW_LINE {printf("%s;\n",$1);}
-     | numeric_expression NEW_LINE {printf("%s;\n",$1);}
+start: chained_statements {printf("%s",$1);free($1);}
+     | boolean_expression NEW_LINE {printf("%s;\n",$1);free($1);}
+     | numeric_expression NEW_LINE {printf("%s;\n",$1);free($1);}
      ;
 
 statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
@@ -55,6 +55,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");}
          | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE
          {$$=calloc(1,20+strlen($2)+strlen($4));strcat($$,"do {\n\t");strcat($$,$2);strcat($$,"} while (");strcat($$,$4);strcat($$,");\n");}
+         | READ NEW_LINE { $$=calloc(1,50);strcat($$,"char read[100]; scanf(\"%s\",read);printf(\"%s\\n\",read);\n");} /* TODO: chequear que la variable exista y sea de tipo string */
          ;
 
 chained_statements: statement
