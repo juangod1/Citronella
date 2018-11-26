@@ -1,3 +1,5 @@
+begin
+
 bool a = true
 bool b = false
 
