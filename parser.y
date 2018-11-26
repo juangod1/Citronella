@@ -28,7 +28,7 @@ static int read=0;
 
 %%
 
-start: chained_statements {printf("%s",$1);free($1);}
+start: chained_statements {printf("%s",$1);}
      | boolean_expression NEW_LINE {printf("%s;\n",$1);free($1);}
      | numeric_expression NEW_LINE {printf("%s;\n",$1);free($1);}
      ;
@@ -57,7 +57,7 @@ statement: STRING_TYPE VARIABLE ASSIGN CONSTANT_STRING NEW_LINE
          {$$=calloc(1,23+strlen($2));strcat($$,"printf(\"%d\\n\",");strcat($$,$2);strcat($$,");\n");}
          | LOOP chained_statements LOOP_CONDITION boolean_expression NEW_LINE
          {$$=calloc(1,20+strlen($2)+strlen($4));strcat($$,"do {\n\t");strcat($$,$2);strcat($$,"} while (");strcat($$,$4);strcat($$,");\n");}
-         | READ NEW_LINE { $$=calloc(1,50);if(!read){strcat($$,"char read[1000];"); read=1;};strcat($$,"scanf(\"%s\",read);printf(\"%s\\n\",read);\n");} /* TODO: chequear que la variable exista y sea de tipo string */
+         | READ NEW_LINE { $$=calloc(1,60);if(!read){strcat($$,"char read[1000];  "); read=1;};strcat($$,"scanf(\"%s\",read);  printf(\"%s\\n\",read);\n");} /* TODO: chequear que la variable exista y sea de tipo string */
          ;
 
 chained_statements: statement
