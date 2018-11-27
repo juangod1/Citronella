@@ -9,6 +9,7 @@ show "The operation: ((true) and false) or b and not (a and b) and not (((true) 
 ? show "is true"
 ! show "is false"
 
-#- the answer is false -#
+#- the answer
+is false -#
 
 end
