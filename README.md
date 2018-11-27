@@ -43,7 +43,7 @@ The following table shows all the relational operators supported by Citronella. 
 | Operator | Description | Example|
 | ------------- | ------------- | ------ |
 | ==  | Checks if the values of two operands are equal or not. If yes, then the condition becomes true. | (A == B) is not true.  |
-| not(A==B) | Checks if the values of two operands are equal or not. If the values are not equal, then the condition becomes true. | not(A == B) is true. |
+| not (A==B) | Checks if the values of two operands are equal or not. If the values are not equal, then the condition becomes true. | not(A == B) is true. |
 | > | Checks if the value of left operand is greater than the value of right operand. If yes, then the condition becomes true. | (A > B) is not true. |
 | < | Checks if the value of left operand is less than the value of right operand. If yes, then the condition becomes true. | (A < B) is true. |
 | >= | Checks if the value of left operand is greater than or equal to the value of right operand. If yes, then the condition becomes true. | (A >= B) is not true. |
@@ -56,7 +56,12 @@ Following table shows all the logical operators supported by Citronella language
 | ------------- | ------------- | ------ |
 | and  | Called Logical AND operator. If both the operands are non-zero, then the condition becomes true. | (A and B) is false. |
 | or  | Called Logical OR Operator. If any of the two operands is non-zero, then the condition becomes true. | (A or B) is true. |
-| not | Called Logical NOT Operator. It is used to reverse the logical state of its operand. If a condition is true, then Logical NOT operator will make it false. | not(A and B) is true. |
+| not | Called Logical NOT Operator. It is used to reverse the logical state of its operand. If a condition is true, then Logical NOT operator will make it false. | not (A and B) is true. |
+
+## Comments and Delimiters
+There are multiline comments, they must be surrounded by ``` #- Comment -#```
+
+Line delimiter in Citronella is "\n". Then, comments must appear in their own line.
 
 ## Conditional blocks
 Conditional blocks allow a program to take different paths depending on some condition(s).
