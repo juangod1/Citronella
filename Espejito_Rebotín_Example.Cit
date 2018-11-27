@@ -5,4 +5,6 @@ show "¡Espejito rebotín!"
 repeat read
 while true
 
+#- para terminar de leer cancelar el programa con ctrl+z -#
+
 end

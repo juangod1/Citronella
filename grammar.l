@@ -11,32 +11,34 @@ extern int yyerror(char *errormsg);
  ******          Whitespace and newlines       ******
  ****************************************************/
 
-[\t ]+             ;
+[\t ]+        ;
 
-[\n]+       {return NEW_LINE;}
+[\n]+         { return NEW_LINE; }
 
  /***************************************************
  ******          Statements                    ******
  ****************************************************/
-"begin" {return ENTRY;}
+"begin"       { return ENTRY; }
 
-"repeat" {return LOOP;}
+"repeat"      { return LOOP; }
 
-"while" {return LOOP_CONDITION;}
+"while"       { return LOOP_CONDITION; }
 
-"end" {return END;}
+"end"         { return END; }
 
-"!"            {return CONDITIONAL_ELSE;}
+"!"           { return CONDITIONAL_ELSE; }
 
-"?"            {return CONDITIONAL;}
+"?"           { return CONDITIONAL; }
 
-=             {return ASSIGN;}
+=             { return ASSIGN; }
 
-"show"           {return SHOW;}
+"show"        { return SHOW; }
 
-"("        { return PARENTHESIS_OPENED; }
+"("           { return PARENTHESIS_OPENED; }
 
-")"        { return PARENTHESIS_CLOSED; }
+")"           { return PARENTHESIS_CLOSED; }
+
+#-([^-#])*-#(\n)*  ;
 
 "read"        { return READ; }
 
@@ -44,23 +46,23 @@ extern int yyerror(char *errormsg);
  ******          Data Types                    ******
  ****************************************************/
 
-"bool"            { return BOOL_TYPE;}
+"bool"        { return BOOL_TYPE; }
 
-true|false        { yylval.str = strdup(yytext);
-                    return CONSTANT_BOOL;}
+true|false    { yylval.str = strdup(yytext);
+                return CONSTANT_BOOL;}
 
-"num"             {return NUM_TYPE;}
+"num"         { return NUM_TYPE; }
 
-[0-9]+              {  yylval.str = strdup(yytext);
-                        return CONSTANT_NUM;}
+[0-9]+        { yylval.str = strdup(yytext);
+                return CONSTANT_NUM;}
 
-"text"            { return STRING_TYPE; }
+"text"        { return STRING_TYPE; }
 
-\".*\"            { yylval.str = strdup(yytext);
-                          return CONSTANT_STRING; }
+\".*\"        { yylval.str = strdup(yytext);
+                return CONSTANT_STRING; }
 
-[a-zA-Z0-9]+              {  yylval.str = strdup(yytext);
-                            return VARIABLE; }
+[a-zA-Z0-9]+  { yylval.str = strdup(yytext);
+                return VARIABLE; }
 
   /***************************************************
   ******          Expressions                   ******
