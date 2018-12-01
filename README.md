@@ -2,12 +2,11 @@
 Citronella is a simple typed language developed with LEX and YACC.
 
 ## Compiling and executing
-In this github you will find all the necessary files to compile a Citronella code. In order to do this, you will first need to build the compiler by executing:
+In this github you will find all the necessary files to compile Citronella code. In order to do this, you will first need to build the compiler by executing:
 ```
-$> ./build_compiler.sh   
-      /* This creates "Citronella" */
-$> ./Citronella_compile.sh filename.Cit filename
-$> ./filename
+$> ./build_compiler
+$> ./Citronella_compile filename.Cit executable
+$> ./executable
 ```
 
 ## Code entry point
@@ -71,7 +70,7 @@ boolean expression
   statement 2
   ...
   statement n
-  
+
 ! statement 1 bis
   statement 2 bis
   ...
@@ -98,10 +97,9 @@ repeat statement 1
  show boolean expression
  show numeric expression
  ```
- 
+
  ## STDIN
  In order to read input from stdin and then write it in stdout:
  ```
  read
  ```
- 
