@@ -8,6 +8,8 @@ repeat y = y . x
 while x > 0
 
 show "El factorial de 6 es: "
+
+#- Prints result -#
 show y
 
 end

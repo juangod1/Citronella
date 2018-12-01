@@ -4,9 +4,10 @@ text ok = "Las expresiones son iguales"
 text error = "Las expresiones son distintas"
 
 num a = 4+23-(5-3).(4-5)
-#- la cuenta da 29 -#
+
 num b = 29
 
+#- Evaluates expression on line 6 -#
 a == b
 ? show ok
 ! show error

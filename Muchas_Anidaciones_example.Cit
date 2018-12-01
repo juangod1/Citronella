@@ -6,6 +6,8 @@ num c = 100
 num d = 100
 num e = 100
 
+
+#- Example of nested loops -#
 repeat repeat repeat repeat a = a + 1
         show "loopy"
         e = e - 1

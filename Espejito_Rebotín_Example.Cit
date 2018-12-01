@@ -2,9 +2,8 @@ begin
 
 show "¡Espejito rebotín!"
 
+#- Reads input from STDIN and prints it to the screen -#
 repeat read
 while true
-
-#- para terminar de leer cancelar el programa con ctrl+z -#
 
 end
